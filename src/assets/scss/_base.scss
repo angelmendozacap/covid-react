@@ -1,0 +1,33 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --title-font: 'Righteous', cursive;
+  --normal-font: 'Comfortaa', cursive;
+
+  --body-bg: rgb(31, 34, 42);
+  --darker-color: rgb(19, 21, 26);
+  --accent-color: #78e2a0;
+  --text-color: #fff;
+  --border-color: hsla(0,0%,100%,0.1)
+}
+
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--normal-font);
+  background-color: var(--body-bg);
+  color: var(--text-color);
+}
+
+h1,h2,h3,h4 {
+  font-family: var(--title-font);
+  color: var(--accent-color);
+  margin-bottom: .75rem;
+}

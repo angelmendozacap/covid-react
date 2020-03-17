@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import httpClient from './plugins/axios'
+import './assets/scss/main.scss'
 
 const App = () => {
 
@@ -18,8 +19,6 @@ const App = () => {
 
   async function fetchStatus() {
     try {
-
-
       const { data } = await httpClient.get(currentCountry ? `/countries/${currentCountry}` : '')
       setCovidState(data)
     } catch (err) {
@@ -47,7 +46,6 @@ const App = () => {
       return <div>Última Actualización: ---</div>
     }
 
-    console.log(covidState.lastUpdate)
     const instanceDate = new Date(covidState.lastUpdate)
 
     const date = `${instanceDate.toLocaleDateString()} ${instanceDate.toLocaleTimeString()}`
@@ -56,51 +54,56 @@ const App = () => {
 
   return (
     <main>
-      <section>
+      <div className="container">
         <h1>Estado del Coronavirus en el Mundo</h1>
 
-        <select onChange={e => setCurrentCountry(e.target.value)} defaultValue="">
-          <option disabled value="">Selecciona un País</option>
-          {
-            Object.keys(countries.countries).map((country, index) => (
-              <option
-                key={countries.countries[country] + index}
-                value={countries.countries[country]}
-              >{country}</option>
-            ))
-          }
-        </select>
+        <div className="country-options">
+          <select onChange={e => setCurrentCountry(e.target.value)} defaultValue="">
+            <option disabled value="">Selecciona un País</option>
+            {
+              Object.keys(countries.countries).map((country, index) => (
+                <option
+                  key={countries.countries[country] + index}
+                  value={countries.countries[country]}
+                >{country}</option>
+              ))
+            }
+          </select>
 
-        <LastUpdatedDate />
-
-        <article>
-          <h2>Casos Confirmados</h2>
-
-          <p>
-            {covidState.confirmed.value}
-          </p>
-        </article>
-
-        <article>
-          <h2>Recuperados</h2>
-
-          <p>
-            {covidState.recovered.value}
-          </p>
-        </article>
-
-        <article>
-          <h2>Muertos</h2>
-
-          <p>
-            {covidState.deaths.value}
-          </p>
-        </article>
-
-        <div>
-          <img src={currentCountry ? `${process.env.REACT_APP_API_URL_COVID}/countries/${currentCountry}/og` : `${process.env.REACT_APP_API_URL_COVID}/og`} alt="Country Status" />
+          <LastUpdatedDate />
         </div>
-      </section>
+
+        <section className="stats-grid">
+          <article>
+            <h2>Casos Confirmados</h2>
+
+            <p>
+              {covidState.confirmed.value}
+            </p>
+          </article>
+
+          <article>
+            <h2>Recuperados</h2>
+
+            <p>
+              {covidState.recovered.value}
+            </p>
+          </article>
+
+          <article>
+            <h2>Muertos</h2>
+
+            <p>
+              {covidState.deaths.value}
+            </p>
+          </article>
+        </section>
+
+
+        {/* <div>
+          <img src={currentCountry ? `${process.env.REACT_APP_API_URL_COVID}/countries/${currentCountry}/og` : `${process.env.REACT_APP_API_URL_COVID}/og`} alt="Country Status" />
+        </div> */}
+      </div>
     </main>
   );
 }
